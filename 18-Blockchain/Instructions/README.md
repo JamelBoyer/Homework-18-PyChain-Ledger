@@ -20,10 +20,11 @@ Open the [`pychain.py` file](Starter_Code/pychain.py) included in the Homework's
 
 The steps for this assignment are divided into the following sections:
 
-> [Step_One_Code](#step_one_code)
-> [Step_Two_Code](#step_two_code)
-> [Streamlit_Code](#Streamlit_Code)
-> [Step_Four_Streamlit](#step_four_code)
+* [Step_One_Code](#step_one_code)
+* [Step_Two_Code](#step_two_code)
+* [Streamlit_Code](#Streamlit)
+* [Step_Four_Streamlit](#Hash)
+* [Submission](#Submission)
 
 1. Create a Record Data Class
 2. Modify the Existing Block Data Class to Store Record Data
@@ -166,9 +167,9 @@ Code additional input areas for the user interface of your Streamlit application
 
 5. As part of the “Add Block” button functionality, update `new_block` so that `Block` consists of an attribute named `record`, which is set equal to a `Record` that contains the `sender`, `receiver`, and `amount` values. The updated `Block` should also include the attributes for `creator_id` and `prev_hash`.
 
-## Streamlit Code
+## Streamlit
 
-[Streamlit](https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/master/18-Blockchain/Photo/Streamlit.jpg)
+## [Streamlit_Click_Here](https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/62a7a02f43948380fc9b1c027a0540da878cb440/18-Blockchain/Instructions/Starter_Code/Photo/Screenshot%202022-08-21%20130759.png)
 
 ### Step 4: Test the PyChain Ledger by Storing Records
 
@@ -185,7 +186,10 @@ Test your complete `PyChain` ledger and user interface by running your Streamlit
 5. Test the blockchain validation process by using the web interface. Take a screenshot of the Streamlit application page, which should indicate the validity of the blockchain. Include the screenshot in the `README.md` file for your homework repository.
 
 ---
-[Winning_Hash](https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/master/18-Blockchain/Instructions/Starter_Code/Photo/Screenshot%202022-08-21%20131252.png)
+
+## Hash
+
+[Winning_Hash_Click_Here](https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/master/18-Blockchain/Instructions/Starter_Code/Photo/Screenshot%202022-08-21%20131252.png)
 
 ## Submission
 
