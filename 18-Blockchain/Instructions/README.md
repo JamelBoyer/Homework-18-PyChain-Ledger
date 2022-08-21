@@ -6,15 +6,6 @@ You’re a fintech engineer who’s working at one of the five largest banks in 
 
 You’ll make the following updates to the provided Python file for this assignment, which already contains the basic `PyChain` ledger structure that you created throughout the module:
 
-1. Create a new data class named `Record`. This class will serve as the blueprint for the financial transaction records that the blocks of the ledger will store.
-
-2. Modify the existing `Block` data class to store `Record` data.
-
-3. Add Relevant User Inputs to the Streamlit interface.
-
-4. Test the PyChain Ledger by Storing Records.
-
----
 ## Files
 
 Download the following files to help you get started:
@@ -29,15 +20,17 @@ Open the [`pychain.py` file](Starter_Code/pychain.py) included in the Homework's
 
 The steps for this assignment are divided into the following sections:
 
+> [Step_One_Code](#step_one_code)
+> [Step_Two_Code](#step_two_code)
+> [Streamlit_Code](#Streamlit_Code)
+> [Step_Four_Streamlit](#step_four_code)
+
 1. Create a Record Data Class
-
 2. Modify the Existing Block Data Class to Store Record Data
-
 3. Add Relevant User Inputs to the Streamlit Interface
-
 4. Test the PyChain Ledger by Storing Records
 
-### Step 1: Create a Record Data Class
+## Step 1: Create a Record Data Class
 
 Define a new Python data class named `Record`. Give this new class a formalized data structure that consists of the `sender`, `receiver`, and `amount` attributes. To do so, complete the following steps:
 
@@ -53,7 +46,23 @@ Define a new Python data class named `Record`. Give this new class a formalized 
 
 Note that you’ll use this new `Record` class as the data type of your `record` attribute in the next section.
 
-### Step 2: Modify the Existing Block Data Class to Store Record Data
+Rename the `data` attribute in your `Block` class to `record`, and then set it to use an instance of the new `Record` class that you created in the previous section. To do so, complete the following steps:
+
+1. In the `Block` class, rename the `data` attribute to `record`.
+
+2. Set the data type of the `record` attribute to `Record`.
+
+### Step_One_Code
+
+@dataclass
+class Record:
+    sender: str
+    receiver: str
+    amount: float
+
+print(Record)
+
+## Step 2: Modify the Existing Block Data Class to Store Record Data
 
 Rename the `data` attribute in your `Block` class to `record`, and then set it to use an instance of the new `Record` class that you created in the previous section. To do so, complete the following steps:
 
@@ -61,7 +70,89 @@ Rename the `data` attribute in your `Block` class to `record`, and then set it t
 
 2. Set the data type of the `record` attribute to `Record`.
 
-### Step 3: Add Relevant User Inputs to the Streamlit Interface
+### Step_Two_Code
+
+@dataclass
+class Block:
+
+    data: Any
+    creator_id: int
+    prev_hash: str = "0"
+    timestamp: str = datetime.datetime.utcnow().strftime("%H:%M:%S")
+    nonce: int = 0
+
+    def hash_block(self):
+        sha = hashlib.sha256()
+
+        record = str(self.record).encode()
+        sha.update(record)
+
+        creator_id = str(self.creator_id).encode()
+        sha.update(creator_id)
+
+        timestamp = str(self.timestamp).encode()
+        sha.update(timestamp)
+
+        prev_hash = str(self.prev_hash).encode()
+        sha.update(prev_hash)
+
+        nonce = str(self.nonce).encode()
+        sha.update(nonce)
+
+        return sha.hexdigest()
+
+@dataclass
+class PyChain:
+    chain: List[Block]
+    difficulty: int = 4
+
+    def proof_of_work(self, block):
+
+        calculated_hash = block.hash_block()
+
+        num_of_zeros = "0" * self.difficulty
+
+        while not calculated_hash.startswith(num_of_zeros):
+
+            block.nonce += 1
+
+            calculated_hash = block.hash_block()
+
+        print("Wining Hash", calculated_hash)
+        return block
+
+    def add_block(self, candidate_block):
+        block = self.proof_of_work(candidate_block)
+        self.chain += [block]
+
+    def is_valid(self):
+        block_hash = self.chain[0].hash_block()
+
+        for block in self.chain[1:]:
+            if block_hash != block.prev_hash:
+                print("Blockchain is invalid!")
+                return False
+
+            block_hash = block.hash_block()
+
+        print("Blockchain is Valid")
+        return True
+
+################################################################################
+
+## Adds the cache decorator for Streamlit
+
+@st.cache(allow_output_mutation=True)
+def setup():
+    print("Initializing Chain")
+    return PyChain([Block("Genesis", 0)])
+
+st.markdown("# PyChain")
+st.markdown("## Store a Transaction Record in the PyChain")
+
+pychain = setup()
+
+## Step 3: Add Relevant User Inputs to the Streamlit Interface
 
 Code additional input areas for the user interface of your Streamlit application. Create these input areas to capture the sender, receiver, and amount for each transaction that you’ll store in the `Block` record. To do so, complete the following steps:
 
@@ -74,6 +165,10 @@ Code additional input areas for the user interface of your Streamlit application
 4. Add an input area where you can get a value for `amount` from the user.
 
 5. As part of the “Add Block” button functionality, update `new_block` so that `Block` consists of an attribute named `record`, which is set equal to a `Record` that contains the `sender`, `receiver`, and `amount` values. The updated `Block` should also include the attributes for `creator_id` and `prev_hash`.
+
+## Streamlit Code
+
+[Streamlit](https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/master/18-Blockchain/Photo/Streamlit.jpg)
 
 ### Step 4: Test the PyChain Ledger by Storing Records
 
@@ -90,7 +185,11 @@ Test your complete `PyChain` ledger and user interface by running your Streamlit
 5. Test the blockchain validation process by using the web interface. Take a screenshot of the Streamlit application page, which should indicate the validity of the blockchain. Include the screenshot in the `README.md` file for your homework repository.
 
 ---
+[Winning_Hash](https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/master/18-Blockchain/Instructions/Starter_Code/Photo/Screenshot%202022-08-21%20131252.png)
+
 ## Submission
+
+[README.md](<https://github.com/JamelBoyer/Homework-18-PyChain-Ledger/blob/cbefc9eebe3a363d86d76bd97e0155fa131ef6c9/18-Blockchain/Instructions/README.md>
 
 You’ll upload the Python file for this assignment to your GitHub repository.
 

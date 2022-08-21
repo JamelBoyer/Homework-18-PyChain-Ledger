@@ -31,20 +31,8 @@ import pandas as pd
 import hashlib
 
 ################################################################################
-# Step 1:
-# Create a Record Data Class
 
-# Define a new Python data class named `Record`. Give this new class a
-# formalized data structure that consists of the `sender`, `receiver`, and
-# `amount` attributes. To do so, complete the following steps:
-# 1. Define a new class named `Record`.
-# 2. Add the `@dataclass` decorator immediately before the `Record` class
-# definition.
-# 3. Add an attribute named `sender` of type `str`.
-# 4. Add an attribute named `receiver` of type `str`.
-# 5. Add an attribute named `amount` of type `float`.
-# Note that you’ll use this new `Record` class as the data type of your `record` attribute in the next section.
-
+## Step 1:
 
 # @TODO
 # Create a Record Data Class that consists of the `sender`, `receiver`, and
@@ -56,7 +44,7 @@ class Record:
     receiver: str
     amount: float
 
-
+print(Record)
 
 
 
@@ -103,6 +91,10 @@ class Block:
         sha.update(nonce)
 
         return sha.hexdigest()
+
+       
+
+
 
 
 @dataclass
@@ -179,7 +171,7 @@ input_data = st.text_input("Block Data")
 
 # @TODO:
 # Add an input area where you can get a value for `sender` from the user.
-sender = st.text_input("Input Sender Information")
+sender_data = st.text_input("Input Sender Information")
 
 
 # @TODO:
@@ -200,7 +192,7 @@ if st.button("Add Block"):
     # which is set equal to a `Record` that contains the `sender`, `receiver`,
     # and `amount` values
     new_block = Block(
-        data=input_data,
+       record=Record,
         creator_id=42,
         prev_hash=prev_block_hash
     )
@@ -208,6 +200,14 @@ if st.button("Add Block"):
     pychain.add_block(new_block)
     st.balloons()
 
+    new_block3 = Block(
+       record=Record,
+        creator_id=44,
+        prev_hash=prev_block_hash
+    )
+
+    pychain.add_block(new_block)
+    st.balloons()
 ################################################################################
 # Streamlit Code (continues)
 
